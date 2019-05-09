@@ -13,7 +13,8 @@ SELECT surname AS surname, (premium+salary) AS solary_with_premium,
 FROM public."Teachers";
 
 4.
-
+SELECT STRING_AGG ( '"The dean of faculty '||name||' is '||dean||'."','. ' )
+FROM public."Faculties";
 
 5.
 SELECT surname
