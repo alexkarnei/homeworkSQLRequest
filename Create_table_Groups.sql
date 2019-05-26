@@ -1,21 +1,24 @@
--- Table: public."Faculties"
+-- Table: public."Groups"
 
--- DROP TABLE public."Faculties";
+-- DROP TABLE public."Groups";
 
-CREATE TABLE public."Faculties"
+CREATE TABLE public."Groups"
 (
-    id integer NOT NULL DEFAULT nextval('"Faculties_id_seq"'::regclass) ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
-    dean character varying(10485760) COLLATE pg_catalog."default" NOT NULL,
-    name character varying(100) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT "Faculties_pkey" PRIMARY KEY (id),
-    CONSTRAINT check_name_unique UNIQUE (name)
+    id integer NOT NULL DEFAULT nextval('"Groups_id_seq"'::regclass) ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    name character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    rating integer NOT NULL,
+    year integer NOT NULL,
+    CONSTRAINT "Groups_pkey" PRIMARY KEY (id),
+    CONSTRAINT groups_name_unique UNIQUE (name)
 ,
-    CONSTRAINT check_dean CHECK (dean::text <> ' '::text)
+    CONSTRAINT check_name_not_empty CHECK (name::text <> ' '::text),
+    CONSTRAINT check_rating_valid CHECK (rating >= 0 AND rating < 6),
+    CONSTRAINT check_year_valid CHECK (year > 0 AND year < 6)
 )
 WITH (
     OIDS = FALSE
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."Faculties"
+ALTER TABLE public."Groups"
     OWNER to postgres;
